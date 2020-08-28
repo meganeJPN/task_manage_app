@@ -1,0 +1,25 @@
+<%= form_with(model: @task,local: true) do |form| %>
+  <div>
+    <%= form.label :name , "タスク名"%>
+    <%= form.text_field :name %>
+  </div>
+    <div>
+    <%= form.label :content , "タスク内容"%>
+    <%= form.text_field :content %>
+  </div>
+    <div>
+    <%= form.label :status , "ステータス"%>
+    <%= form.text_field :status %>
+  </div>
+    <div>
+    <%= form.label :priority , "優先順位"%>
+    <%= form.text_field :priority %>
+  </div>
+    <div>
+    <%= form.label :deadline , "終了期限"%>
+    <%= form.text_field :deadline %>
+  </div>
+  <div>
+    <%= form.submit "登録する" %>
+  </div>
+<% end%>
