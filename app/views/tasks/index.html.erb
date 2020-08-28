@@ -26,6 +26,8 @@
        <td><%= task.updated_at %></td>
        <td><%= link_to '詳細', task %></td>
        <td><%= link_to '編集', edit_task_path(task) %></td>
+       <td><%= link_to '削除', task, method: :delete, data: { confirm: '本当に削除してよろしいですか?' }%></td>
+
       </tr>
     <% end %>
   </tbody>
