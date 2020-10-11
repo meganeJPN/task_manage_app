@@ -11,6 +11,21 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
   end
+
+  describe '新規作成機能' do
+    context 'タスクを新規作成した場合' do
+      it '終了期限も登録できる' do
+        visit new_task_path
+        fill_in "task[name]", with: "new_task_name"
+        fill_in "task[content]", with: "new_task_content"
+        fill_in "task[deadline]", with: "1900/01/01"
+        click_on("登録する")
+        expect(page).to have_content '1900-01-01 00:00:00 +0900'
+      end
+    end
+  end
+
+
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
@@ -24,6 +39,29 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
   end
+
+  describe '一覧表示機能' do
+    context '一覧画面で「終了期限でソートする」をクリックした場合' do
+      it '終了期限で降順でソートされたタスク一覧が表示される' do
+        task_old = FactoryBot.create(:task, name:'test_task_name_deadline_old', deadline:'1900/01/01')
+        task_new = FactoryBot.create(:task, name:'test_task_name_deadline_new', deadline:'1900/02/01')
+        visit tasks_path
+        click_on("終了期限でソートする")
+        # binding.irb
+        all('tr td')[7].click_on '詳細'
+        expect(page).to have_content '1900-02-01 00:00:00 +0900'
+        
+        visit tasks_path
+        click_on("終了期限でソートする")
+        
+        # binding.irb
+        sleep 1
+        all('tr td')[17].click_on '詳細'
+        expect(page).to have_content '1900-01-01 00:00:00 +0900'
+      end
+    end
+  end
+
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示される' do
