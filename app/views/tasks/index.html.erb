@@ -19,7 +19,7 @@
       <tr>
        <td><%= task.name %></td>
        <td><%= task.content %></td>
-       <td><%= task.status %></td>
+       <td><%= t("enums.task.status.#{task.status}") %></td>
        <td><%= task.priority %></td>
        <td><%= task.deadline %></td>
        <td><%= task.created_at %></td>

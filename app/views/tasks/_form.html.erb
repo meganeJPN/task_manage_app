@@ -19,7 +19,7 @@
   </div>
     <div>
     <%= form.label :status , "ステータス"%>
-    <%= form.text_field :status %>
+    <%= form.select :status, Task.statuses.map{|k, v| [t("enums.task.status.#{k}"),v]} %>
   </div>
     <div>
     <%= form.label :priority , "優先順位"%>
