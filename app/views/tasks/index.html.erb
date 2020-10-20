@@ -21,9 +21,9 @@
        <td><%= task.content %></td>
        <td><%= t("enums.task.status.#{task.status}") %></td>
        <td><%= t("enums.task.priority.#{task.priority}") %></td>
-       <td><%= task.deadline %></td>
-       <td><%= task.created_at %></td>
-       <td><%= task.updated_at %></td>
+       <td><%= task.deadline && task.deadline.to_s(:stamp) %></td>
+       <td><%= task.created_at && task.created_at.to_s(:stamp) %></td>
+       <td><%= task.updated_at && task.updated_at.to_s(:stamp) %></td>
        <td><%= link_to '詳細', task %></td>
        <td><%= link_to '編集', edit_task_path(task) %></td>
        <td><%= link_to '削除', task, method: :delete, data: { confirm: '本当に削除してよろしいですか?' }%></td>

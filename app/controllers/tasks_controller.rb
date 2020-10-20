@@ -3,6 +3,7 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all.order(created_at: "DESC")
     @tasks = Task.all.order(deadline: "DESC") if params[:sort_expired]
+    # binding.irb
   end
 
   def show
