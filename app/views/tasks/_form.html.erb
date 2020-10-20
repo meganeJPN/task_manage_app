@@ -23,7 +23,7 @@
   </div>
     <div>
     <%= form.label :priority , "優先順位"%>
-    <%= form.text_field :priority %>
+    <%= form.select :priority, Task.priorities.map{|k, v| [t("enums.task.priority.#{k}"),v]} %>
   </div>
     <div>
     <%= form.label :deadline , "終了期限"%>
