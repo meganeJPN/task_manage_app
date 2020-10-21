@@ -3,10 +3,12 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all.order(created_at: "DESC")
-    @tasks = @tasks.order(deadline: "DESC") if params[:sort_expired].present?
     @task_search_params = task_search_params
-    @tasks = @tasks.where('name LIKE ?', "%#{@task_search_params[:name]}%") if @task_search_params[:name].present?
-    @tasks = @tasks.where(status: @task_search_params[:status]) if @task_search_params[:status].present?
+    @tasks = Task.search(@task_search_params)
+    @tasks = @tasks.order(deadline: "DESC") if params[:sort_expired].present?
+    
+    # @tasks = @tasks.where('name LIKE ?', "%#{@task_search_params[:name]}%") if @task_search_params[:name].present?
+    # @tasks = @tasks.where(status: @task_search_params[:status]) if @task_search_params[:status].present?
     
     # binding.irb
     
