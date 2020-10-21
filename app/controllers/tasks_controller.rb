@@ -3,9 +3,20 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all.order(created_at: "DESC")
-    @tasks = Task.all.order(deadline: "DESC") if params[:sort_expired].present?
-    @tasks = Task.where('name LIKE ?', "%#{params[:name]}%") if params[:name].present?
-  
+    @tasks = @tasks.order(deadline: "DESC") if params[:sort_expired].present?
+    @task_search_params = task_search_params
+    @tasks = @tasks.where('name LIKE ?', "%#{@task_search_params[:name]}%") if @task_search_params[:name].present?
+    @tasks = @tasks.where(status: @task_search_params[:status]) if @task_search_params[:status].present?
+    
+    # binding.irb
+    
+    # if params[:task].present?
+    #   if params[:name].present? && params[:status].present?
+    #   elsif params[:name].present?
+    #   elsif params[:status].present?
+    #   end
+    # end
+
   end
 
   def show
@@ -51,6 +62,6 @@ class TasksController < ApplicationController
   end
 
   def task_search_params
-    params.fetch(:search,{}).permit(:name)
+    params.fetch(:search,{}).permit(:name,:status)
   end
 end

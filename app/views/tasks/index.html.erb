@@ -3,10 +3,12 @@
 
 <div class="search-form">
 
-  <%= form_with(url: tasks_path, method: :get, local: true) do |f| %>
+  <%= form_with(scope: :search,url: tasks_path, method: :get, local: true) do |f| %>
     <div class="field">
       <%= f.label(:name, "タスク名") %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, value: @task_search_params[:name]%>
+      <%= f.label(:status, "ステータス") %>
+      <%= f.select :status, Task.statuses.map{|k, v| [t("enums.task.status.#{k}"),v]}, selected: @task_search_params[:status],include_blank: true %>
       <%= f.submit(:search) %>
     </div>
   <% end %>
