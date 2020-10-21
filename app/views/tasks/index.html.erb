@@ -1,5 +1,17 @@
 <p id="notice"><%= notice %></p>
 <h1>タスク一覧</h1>
+
+<div class="search-form">
+
+  <%= form_with(url: tasks_path, method: :get, local: true) do |f| %>
+    <div class="field">
+      <%= f.label(:name, "タスク名") %>
+      <%= f.text_field :name %>
+      <%= f.submit(:search) %>
+    </div>
+  <% end %>
+</div>
+
 <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
 <table>
   <thead>

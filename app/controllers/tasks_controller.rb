@@ -1,9 +1,11 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+
   def index
     @tasks = Task.all.order(created_at: "DESC")
-    @tasks = Task.all.order(deadline: "DESC") if params[:sort_expired]
-    # binding.irb
+    @tasks = Task.all.order(deadline: "DESC") if params[:sort_expired].present?
+    @tasks = Task.where('name LIKE ?', "%#{params[:name]}%") if params[:name].present?
+  
   end
 
   def show
@@ -48,4 +50,7 @@ class TasksController < ApplicationController
     params.require(:task).permit(:name, :content, :deadline).merge(status: params[:task][:status].to_i, priority: params[:task][:priority].to_i)
   end
 
+  def task_search_params
+    params.fetch(:search,{}).permit(:name)
+  end
 end

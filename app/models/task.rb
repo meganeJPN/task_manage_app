@@ -6,4 +6,9 @@ class Task < ApplicationRecord
 
   enum status: {wating: 0, working: 1, completed: 2}
   enum priority: {low: 0, middle: 1, high: 2}
+
+  # def self.search(search)
+  #   return Task.all unless search
+  #   Task.where(['name LIKE ?', "%#{search}"])
+  # end
 end
