@@ -49,7 +49,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         # task_old = FactoryBot.create(:task, name:'test_task_name_deadline_old', deadline:'1900/01/01')
         # task_new = FactoryBot.create(:task, name:'test_task_name_deadline_new', deadline:'1900/02/01')
         task_old = FactoryBot.create(:task, name:'test_task_name_deadline_old')
-        sleep 10
+        # sleep 10
         task_new = FactoryBot.create(:second_task, name:'test_task_name_deadline_new')
         visit tasks_path
         click_on("終了期限でソートする")
@@ -60,6 +60,30 @@ RSpec.describe 'タスク管理機能', type: :system do
         sleep 1
         all('tr td')[17].click_on '詳細'
         expect(page).to have_content '2000/01/01 18:00'
+      end
+    end
+
+    context '一覧画面で「優先順位でソートする」をクリックした場合' do
+      it '優先順位で降順でソートされたタスク一覧が表示される' do
+        # task_old = FactoryBot.create(:task, name:'test_task_name_deadline_old', deadline:'1900/01/01')
+        # task_new = FactoryBot.create(:task, name:'test_task_name_deadline_new', deadline:'1900/02/01')
+        task_middle = FactoryBot.create(:task, name:'test_task_name_priority_middle',priority:'middle')
+        task_low = FactoryBot.create(:second_task, name:'test_task_name_priority_low',priority:'low')
+        task_high = FactoryBot.create(:third_task, name:'test_task_name_priority_high',priority:'high')
+        visit tasks_path
+        click_on("優先順位の高い順でソートする")
+        all('tr td')[7].click_on '詳細'
+        expect(page).to have_content '高'
+        visit tasks_path
+        click_on("優先順位の高い順でソートする")
+        sleep 1
+        all('tr td')[17].click_on '詳細'
+        expect(page).to have_content '中'
+        visit tasks_path
+        click_on("優先順位の高い順でソートする")
+        sleep 1
+        all('tr td')[27].click_on '詳細'
+        expect(page).to have_content '低'
       end
     end
 
