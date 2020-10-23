@@ -14,7 +14,8 @@
   <% end %>
 </div>
 
-<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
+<%= link_to "終了期限でソートする", tasks_path(sort_expired_deadline: "true") %>
+<%= link_to "優先順位の高い順でソートする", tasks_path(sort_expired_priority: "true") %>
 <table>
   <thead>
     <tr>
