@@ -10,9 +10,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content '登録しました'
       end
     end
-  end
-
-  describe '新規作成機能' do
+  
     context 'タスクを新規作成した場合' do
       it '終了期限も登録できる' do
         visit new_task_path
@@ -23,6 +21,20 @@ RSpec.describe 'タスク管理機能', type: :system do
         click_on("登録する")
         # binding.irb
         expect(page).to have_content '1900/01/01 00:00'
+      end
+    end
+
+    context 'タスクを新規作成した場合' do
+      it '優先順位も登録できる' do
+        visit new_task_path
+        fill_in "task[name]", with: "new_task_name"
+        fill_in "task[content]", with: "new_task_content"
+        # binding.irb
+        # fill_in "task[priority]", with: "00190001010000"
+        select '中',from:'task[priority]'
+        click_on("登録する")
+        # binding.irb
+        expect(page).to have_content '中'
       end
     end
   end
@@ -53,6 +65,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         task_new = FactoryBot.create(:second_task, name:'test_task_name_deadline_new')
         visit tasks_path
         click_on("終了期限でソートする")
+        sleep 1
         all('tr td')[7].click_on '詳細'
         expect(page).to have_content '2010/01/01 18:00'
         visit tasks_path
