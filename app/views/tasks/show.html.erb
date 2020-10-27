@@ -12,17 +12,27 @@
 
 <p>
   <strong>ステータス　:</strong>
-  <%= @task.status %>
+  <%= t("enums.task.status.#{@task.status}") %>
 </p>
 
 <p>
   <strong>優先順位　:</strong>
-  <%= @task.priority %>
+  <%= t("enums.task.priority.#{@task.priority}") %>
 </p>
 
 <p>
   <strong>終了期限　:</strong>
-  <%= @task.deadline %>
+  <%= @task.deadline && @task.deadline.to_s(:stamp) %>
+</p>
+
+<p>
+  <strong>作成日時　:</strong>
+  <%= @task.created_at && @task.created_at.to_s(:stamp) %>
+</p>
+
+<p>
+  <strong>更新日時　:</strong>
+  <%= @task.updated_at && @task.updated_at.to_s(:stamp) %>
 </p>
 
 

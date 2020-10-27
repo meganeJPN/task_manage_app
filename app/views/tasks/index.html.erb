@@ -1,14 +1,27 @@
 <p id="notice"><%= notice %></p>
 <h1>タスク一覧</h1>
 
-<table>
+<div class="search-form">
+
+  <%= form_with(scope: :search,url: tasks_path, method: :get, local: true) do |f| %>
+    <div class="field">
+      <%= f.label(:name, "タスク名") %>
+      <%= f.text_field :name, value: @task_search_params[:name]%>
+      <%= f.label(:status, "ステータス") %>
+      <%= f.select :status, Task.statuses.map{|k, v| [t("enums.task.status.#{k}"),v]}, selected: @task_search_params[:status],include_blank: true %>
+      <%= f.submit "検索", class:"btn btn-primary btn-lg btn-block" %>
+    </div>
+  <% end %>
+</div>
+
+<table class = "table">
   <thead>
     <tr>
       <th>タスク名</th>
       <th>タスク詳細</th>
       <th>ステータス</th>
-      <th>優先順位</th>
-      <th>終了期限</th>
+      <th><%= link_to "優先順位▼", tasks_path(sort_expired_priority: "true") %></th>
+      <th><%= link_to "終了期限▼", tasks_path(sort_expired_deadline: "true") %></th>
       <th>作成日時</th>
       <th>更新日時</th>
       <th colspan="1"></th>
@@ -19,16 +32,16 @@
       <tr>
        <td><%= task.name %></td>
        <td><%= task.content %></td>
-       <td><%= task.status %></td>
-       <td><%= task.priority %></td>
-       <td><%= task.deadline %></td>
-       <td><%= task.created_at %></td>
-       <td><%= task.updated_at %></td>
-       <td><%= link_to '詳細', task %></td>
-       <td><%= link_to '編集', edit_task_path(task) %></td>
-       <td><%= link_to '削除', task, method: :delete, data: { confirm: '本当に削除してよろしいですか?' }%></td>
-
+       <td><%= t("enums.task.status.#{task.status}") %></td>
+       <td><%= t("enums.task.priority.#{task.priority}") %></td>
+       <td><%= task.deadline && task.deadline.to_s(:stamp) %></td>
+       <td><%= task.created_at && task.created_at.to_s(:stamp) %></td>
+       <td><%= task.updated_at && task.updated_at.to_s(:stamp) %></td>
+       <td><%= link_to '詳細', task , class:"btn btn-outline-primary" %></td>
+       <td><%= link_to '編集', edit_task_path(task),class:"btn btn-outline-info" %></td>
+       <td><%= link_to '削除', task, method: :delete, data: { confirm: '本当に削除してよろしいですか?' },class:"btn btn-outline-danger"%></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= paginate @tasks %>

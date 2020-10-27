@@ -19,15 +19,15 @@
   </div>
     <div>
     <%= form.label :status , "ステータス"%>
-    <%= form.text_field :status %>
+    <%= form.select :status, Task.statuses.map{|k, v| [t("enums.task.status.#{k}"),v]} %>
   </div>
     <div>
     <%= form.label :priority , "優先順位"%>
-    <%= form.text_field :priority %>
+    <%= form.select :priority, Task.priorities.map{|k, v| [t("enums.task.priority.#{k}"),v]} %>
   </div>
     <div>
     <%= form.label :deadline , "終了期限"%>
-    <%= form.text_field :deadline %>
+    <%= form.datetime_field :deadline %>
   </div>
   <div>
     <%= form.submit "登録する" %>
