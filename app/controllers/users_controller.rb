@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
   def new
-    @user = User.new
+    if logged_in?
+      redirect_to user_path(current_user.id)
+    else
+      @user = User.new
+    end
+    
   end
 
   def create
@@ -14,7 +19,18 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    if logged_in?
+      # binding.irb
+      # if params[:id] == current_user.id
+      #   @user = current_user
+      # else
+      #   redirect_to user_path(current_user.id)
+      # end
+      @user = current_user
+    else 
+      redirect_to new_session_path
+    end
+    
   end
 
   private
