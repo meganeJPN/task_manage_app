@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :not_admin_or_not_login_redirect
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   def index
     @users = User.all.order(created_at: "ASC") 
   end
@@ -19,18 +20,25 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(id: params[:id].to_i) 
+    
   end
 
+  def edit
+
+  end
 
   def destroy
-    User.find(params[:id]).destroy
+    @user.destroy
     redirect_to admin_users_path, notice: "ユーザーを削除しました！"
   end
 
   private
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 
   def not_admin_or_not_login_redirect
