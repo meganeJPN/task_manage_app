@@ -39,7 +39,7 @@ class Admin::UsersController < ApplicationController
 
   def not_admin_or_not_login_redirect
     redirect_to new_session_path unless logged_in?
-    redirect_to tasks_path unless current_user.admin?
+    redirect_to tasks_path,notice: "管理者以外はアクセスできません" unless current_user.admin?
   end
 
 end
