@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :not_admin_or_not_login_redirect
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:edit, :update, :destroy]
   def index
     @users = User.all.order(created_at: "ASC") 
   end
@@ -17,10 +17,6 @@ class Admin::UsersController < ApplicationController
     else
       render :new
     end
-  end
-
-  def show
-    
   end
 
   def edit
