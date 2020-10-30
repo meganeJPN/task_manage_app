@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      redirect_to user_path(@user.id)
+      redirect_to tasks_path, notice: "#{@user.name}を登録しました！"
     else
       render :new
     end

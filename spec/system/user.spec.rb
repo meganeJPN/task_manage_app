@@ -3,11 +3,12 @@ RSpec.describe 'ユーザ管理機能', type: :system do
   describe 'ユーザ登録のテスト' do
     context 'ユーザを新規登録した場合' do
       it '作成したユーザが表示される' do
-        visit new_task_path
-        fill_in "task[name]", with: "new_task_name"
-        fill_in "task[content]", with: "new_task_content"
-        fill_in "task[deadline]", with: "00190001010000"
-        click_on("登録する")
+        visit new_user_path
+        fill_in "user[name]", with: "new_common_user_name"
+        fill_in "user[email]", with: "common@sample.jp"
+        fill_in "user[password]", with: "12345678"
+        fill_in "user[password_confirmation]", with: "12345678"
+        click_on("アカウント作成")
         expect(page).to have_content '登録しました'
       end
     end
