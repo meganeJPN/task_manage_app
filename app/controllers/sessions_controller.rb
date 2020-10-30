@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     # binding.irb
     if user && user.authenticate(params[:session][:password])
       session[:user_id] = user.id
-      redirect_to user_path(user.id)
+      redirect_to tasks_path
     else
       flash.now[:danger] = 'ログインに失敗しました'
       render :new
