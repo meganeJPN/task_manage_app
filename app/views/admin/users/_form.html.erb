@@ -13,6 +13,8 @@
   <%= f.text_field :name %>
   <%= f.label :email%>
   <%= f.email_field :email %>
+  <%= f.label :admin , "権限"%>
+  <%= f.select :admin, [["一般", false],['管理者',true]] %>
   <%= f.label :password %>
   <%= f.password_field :password %>
   <%= f.label :password_confirmation %>
