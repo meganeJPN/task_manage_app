@@ -20,6 +20,7 @@
        <td><%= user.admin == true ? "管理者" : "一般" %></td>
        <td><%= user.created_at && user.created_at.to_s(:stamp) %></td>
        <td><%= user.updated_at && user.updated_at.to_s(:stamp) %></td>
+       <td><%= link_to '詳細', admin_user_path(user),class:"btn btn-outline-primary" %></td>
        <td><%= link_to '編集', edit_admin_user_path(user),class:"btn btn-outline-info" %></td>
        <td><%= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: '本当に削除してよろしいですか?' },class:"btn btn-outline-danger"%></td>
       </tr>
