@@ -11,10 +11,9 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
-    binding.irb
     @user = User.new(user_params)
     if @user.save
-      redirect_to admin_users_path
+      redirect_to admin_users_path, notice:"#{@user.name}を作成しました"
     else
       render :new
     end
@@ -24,13 +23,21 @@ class Admin::UsersController < ApplicationController
 
   end
 
+  def update
+    if @user.update(user_params)
+      redirect_to admin_users_path, notice: "#{@user.name}の情報を更新しました！"
+    else
+      render :edit
+    end
+  end
+
   def show
 
   end
 
   def destroy
     if @user.destroy
-      flash[:notice] = "アカウントを削除しました！"
+      flash[:notice] = "アカウント#{@user.name}を削除しました！"
     else
       flash[:notice] =  "管理者権限のアカウントが１つしかないため、この管理者権限を持ったアカウントを削除できません"
     end

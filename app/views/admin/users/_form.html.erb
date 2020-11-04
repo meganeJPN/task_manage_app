@@ -8,7 +8,7 @@
     </ul>
   </div>
 <% end %>
-<%= form_with(model: @user, url: admin_users_path, local:true) do |f| %>
+<%= form_with(model: @user, url: @user.new_record? ? admin_users_path : admin_user_path(@user.id), local:true) do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <%= f.label :email%>
@@ -19,5 +19,9 @@
   <%= f.password_field :password %>
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %>
-  <%= f.submit "アカウント作成"%>
+  <% if action_name == "new" %>
+    <%= f.submit "アカウント作成"%>
+  <% else%>
+    <%= f.submit "アカウント修正"%>
+  <% end %>
 <% end%>
