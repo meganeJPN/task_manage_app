@@ -4,29 +4,32 @@ describe 'タスクモデル機能', type: :model do
   describe 'バリデーションのテスト' do
     context 'タスクのタイトルが空の場合' do
       it 'バリデーションにひっかる' do
-        task = Task.new(name: '', content: '失敗テスト')
+        user = FactoryBot.create(:common_user)
+        task = Task.new(name: '', content: '失敗テスト',status: 'working', priority:'low', deadline:'2020-10-10 18:00:00',user_id:user.id)
         expect(task).not_to be_valid
       end
     end
     context 'タスクの詳細が空の場合' do
       it 'バリデーションにひっかる' do
-        task = Task.new(name: '失敗テスト', content: '')
+        user = FactoryBot.create(:common_user)
+        task = Task.new(name: '失敗テスト', content: '',status: 'working', priority:'low', deadline:'2020-10-10 18:00:00',user_id:user.id)
         expect(task).not_to be_valid
       end
     end
     context 'タスクのタイトルと詳細に内容が記載されている場合' do
       it 'バリデーションが通る' do
-        task = Task.new(name: '成功テスト', content: '成功テスト',deadline:'2020-10-10 18:00:00')
+        user = FactoryBot.create(:common_user)
+        task = Task.new(name: '成功テスト', content: '成功テスト',status: 'working', priority:'low', deadline:'2020-10-10 18:00:00',user_id:user.id)
         expect(task).to be_valid
       end
     end
   end
   describe "検索機能" do
-    let!(:task) {FactoryBot.create(:task, name:'test_task_name_status_working')}
-    let!(:second_task) { FactoryBot.create(:second_task, name:'test_task_name_result')}
-    let!(:third_task) {FactoryBot.create(:third_task, name:'test_task_name_status_waiting')}
-    let!(:fourth_task) {FactoryBot.create(:fourth_task, name:'test_task_name_status_result')}
-
+    let!(:user) { FactoryBot.create(:common_user) }
+    let!(:task) { FactoryBot.create(:task, name:'test_task_name_status_working',user_id: user.id) }
+    let!(:second_task) { FactoryBot.create(:second_task, name:'test_task_name_result',user_id: user.id)}
+    let!(:third_task) { FactoryBot.create(:third_task, name:'test_task_name_status_waiting',user_id: user.id)}
+    let!(:fourth_task) { FactoryBot.create(:fourth_task, name:'test_task_name_status_result',user_id: user.id)}
     context 'scopeメソッドのタイトルのあいまい検索をした場合' do
       it "検索キーワードを含むタスクが絞り理こまれる" do
         # binding.irb
