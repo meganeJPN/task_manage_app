@@ -3,27 +3,12 @@ class TasksController < ApplicationController
   before_action :not_login_redirect_to_new_session,only: [:index,:show,:create,:edit,:update,:destroy]
 
   def index
-    @tasks = current_user.tasks.order(created_at: "DESC")
-    # @tasks = current_user.preload(:tasks).order(created_at: "DESC")
-    # @tasks = Task.eager_load(:users).where(users: {id: current_user.id})
-    # @tasks = User.tasks.order(created_at: "DESC")
+    @tasks = Task.eager_load(:users).where(users: {id: current_user.id}).order(created_at: "DESC")
     @task_search_params = task_search_params
     @tasks = current_user.tasks.search(@task_search_params)
     @tasks = @tasks.order(deadline: "DESC") if params[:sort_expired_deadline].present?
     @tasks = @tasks.order(priority: "DESC") if params[:sort_expired_priority].present?
     @tasks = @tasks.page(params[:page]).per(10)
-    # @tasks = @tasks.where('name LIKE ?', "%#{@task_search_params[:name]}%") if @task_search_params[:name].present?
-    # @tasks = @tasks.where(status: @task_search_params[:status]) if @task_search_params[:status].present?
-    
-    # binding.irb
-    
-    # if params[:task].present?
-    #   if params[:name].present? && params[:status].present?
-    #   elsif params[:name].present?
-    #   elsif params[:status].present?
-    #   end
-    # end
-
   end
 
   def show
