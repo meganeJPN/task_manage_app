@@ -32,7 +32,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-
+    @tasks = @user.tasks.order(created_at: "DESC")
+    # @tasks = @tasks.order(deadline: "DESC") if params[:sort_expired_deadline].present?
+    # @tasks = @tasks.order(priority: "DESC") if params[:sort_expired_priority].present?
+    @tasks = @tasks.page(params[:page]).per(10)
+    # binding.irb
   end
 
   def destroy
