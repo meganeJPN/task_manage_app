@@ -6,6 +6,7 @@
     <tr>
       <th>ユーザー名</th>
       <th>E-MAIL</th>
+      <th>タスク数</th>
       <th>権限</th>
       <th>作成日時</th>
       <th>更新日時</th>
@@ -17,6 +18,7 @@
       <tr>
        <td><%= user.name %></td>
        <td><%= user.email %></td>
+       <td><%= user.tasks.count %></td>
        <td><%= user.admin == true ? "管理者" : "一般" %></td>
        <td><%= user.created_at && user.created_at.to_s(:stamp) %></td>
        <td><%= user.updated_at && user.updated_at.to_s(:stamp) %></td>
