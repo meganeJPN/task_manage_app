@@ -27,6 +27,9 @@ class Admin::UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to admin_users_path, notice: "#{@user.name}の情報を更新しました！"
     else
+      catch(:abort) do
+        flash[:notice] =  "管理者権限のアカウントが１つしかないため、この管理者権限を持ったアカウントの権限を変更できません"
+      end
       render :edit
     end
   end
