@@ -100,6 +100,7 @@ RSpec.describe 'ユーザ管理機能', type: :system do
         fill_in "session[password]", with: "adminadmin"
         click_on("Log in")
         click_on("新規アカウント作成")
+        # binding.irb
         fill_in "user[name]", with: "new_common_user_name"
         fill_in "user[email]", with: "common@sample.jp"
         select '一般',from:'user[admin]'
@@ -118,7 +119,7 @@ RSpec.describe 'ユーザ管理機能', type: :system do
         fill_in "session[email]", with: "admin@sample.jp"
         fill_in "session[password]", with: "adminadmin"
         click_on("Log in")
-        all('tr td')[5].click_on '詳細'
+        all('tr td')[6].click_on '詳細'
         expect(page).to have_content 'commonUser01のプロフィール'
       end
     end
@@ -130,7 +131,7 @@ RSpec.describe 'ユーザ管理機能', type: :system do
         fill_in "session[email]", with: "admin@sample.jp"
         fill_in "session[password]", with: "adminadmin"
         click_on("Log in")
-        all('tr td')[6].click_on '編集'
+        all('tr td')[7].click_on '編集'
         fill_in "user[name]", with: "edited_common_user_name"
         fill_in "user[email]", with: "edited_common@sample.jp"
         select '一般',from:'user[admin]'
@@ -148,7 +149,7 @@ RSpec.describe 'ユーザ管理機能', type: :system do
         fill_in "session[email]", with: "admin@sample.jp"
         fill_in "session[password]", with: "adminadmin"
         click_on("Log in")
-        all('tr td')[7].click_on '削除'
+        all('tr td')[8].click_on '削除'
         page.accept_confirm "本当に削除してよろしいですか?"
         expect(page).to have_content 'アカウントcommonUser01を削除しました！'
       end

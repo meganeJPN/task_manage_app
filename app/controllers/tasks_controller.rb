@@ -3,9 +3,9 @@ class TasksController < ApplicationController
   before_action :not_login_redirect_to_new_session,only: [:index,:show,:create,:edit,:update,:destroy]
 
   def index
-    # @tasks = current_user.tasks.order(created_at: "DESC")
+    @tasks = current_user.tasks.order(created_at: "DESC")
     # @tasks = current_user.preload(:tasks).order(created_at: "DESC")
-    @tasks = Task.eager_load(:users).where(users: {id: current_user.id})
+    # @tasks = Task.eager_load(:users).where(users: {id: current_user.id})
     # @tasks = User.tasks.order(created_at: "DESC")
     @task_search_params = task_search_params
     @tasks = current_user.tasks.search(@task_search_params)
