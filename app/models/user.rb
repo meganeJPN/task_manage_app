@@ -16,6 +16,6 @@ class User < ApplicationRecord
   end
 
   def admin_update?
-    throw :abort if User.where(admin: true).count < 2
+    throw :abort if User.where(admin: true).count == 1
   end
 end
