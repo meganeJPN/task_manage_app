@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @user.name %>のプロフィール</h1>
+<p>
+  <strong>ユーザー名:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>E-MAIL　:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>管理者権限　:</strong>
+  <%= @user.admin %>
+</p>
+
+
+
+<p>
+  <strong>作成日時　:</strong>
+  <%= @user.created_at && @user.created_at.to_s(:stamp) %>
+</p>
+
+<p>
+  <strong>更新日時　:</strong>
+  <%= @user.updated_at && @user.updated_at.to_s(:stamp) %>
+</p>
+
+<table class = "table">
+  <thead>
+    <tr>
+      <th>タスク名</th>
+      <th>タスク詳細</th>
+      <th>ステータス</th>
+      
+      <th>優先順位<%# link_to "優先順位▼", admin_user_path(sort_expired_priority: "true") %></th>
+      <th>終了期限<%# link_to "終了期限▼", admin_user_path(sort_expired_deadline: "true") %></th>
+      
+      <th>作成日時</th>
+      <th>更新日時</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task|%>
+      <tr>
+       <td><%= task.name %></td>
+       <td><%= task.content %></td>
+       <td><%= t("enums.task.status.#{task.status}") %></td>
+       <td><%= t("enums.task.priority.#{task.priority}") %></td>
+       <td><%= task.deadline && task.deadline.to_s(:stamp) %></td>
+       <td><%= task.created_at && task.created_at.to_s(:stamp) %></td>
+       <td><%= task.updated_at && task.updated_at.to_s(:stamp) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @tasks %>
+<%= link_to 'Back', admin_users_path %>
