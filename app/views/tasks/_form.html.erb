@@ -30,6 +30,9 @@
     <%= form.datetime_field :deadline %>
   </div>
   <div>
+    <%= form.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
+  </div>
+  <div>
     <%= form.submit "登録する" %>
   </div>
 <% end%>

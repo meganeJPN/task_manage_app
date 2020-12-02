@@ -7,6 +7,8 @@
       <%= f.text_field :name, value: @task_search_params[:name]%>
       <%= f.label(:status, "ステータス") %>
       <%= f.select :status, Task.statuses.map{|k, v| [t("enums.task.status.#{k}"),v]}, selected: @task_search_params[:status],include_blank: true %>
+       <%= f.label(:label, "ラベル") %>
+      <%= f.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
       <%= f.submit "検索", class:"btn btn-primary btn-lg btn-block" %>
     </div>
   <% end %>
@@ -20,6 +22,7 @@
       <th>ステータス</th>
       <th><%= link_to "優先順位▼", tasks_path(sort_expired_priority: "true") %></th>
       <th><%= link_to "終了期限▼", tasks_path(sort_expired_deadline: "true") %></th>
+      <th>ラベル</th>
       <th>作成日時</th>
       <th>更新日時</th>
       <th colspan="1"></th>
@@ -33,6 +36,11 @@
        <td><%= t("enums.task.status.#{task.status}") %></td>
        <td><%= t("enums.task.priority.#{task.priority}") %></td>
        <td><%= task.deadline && task.deadline.to_s(:stamp) %></td>
+       <td>
+        <% task.labels.each do |label|%>
+          <%= label.name %>
+        <% end %>
+       </td>
        <td><%= task.created_at && task.created_at.to_s(:stamp) %></td>
        <td><%= task.updated_at && task.updated_at.to_s(:stamp) %></td>
        <td><%= link_to '詳細', task , class:"btn btn-outline-primary" %></td>

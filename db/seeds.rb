@@ -22,6 +22,10 @@ user03 =   User.create!(name:  "Saburo",
     password_confirmation: "12345678",
     admin: false)
 
+label01 = Label.create!(name: "仕事")
+label02 = Label.create!(name: "勉強")
+label03 = Label.create!(name: "遊び")
+
 100.times do |n|
   name  = "#{user01.name}のタスク#{n+1} "
   content = "#{user01.name}のコンテント#{n+1}"
@@ -29,12 +33,13 @@ user03 =   User.create!(name:  "Saburo",
   priority = Task.priorities.invert.fetch(rand(3))
   deadline = DateTime.now - rand(1000)
   deadline.to_s(:db)
-  Task.create!(name:  name,
+  task = Task.create!(name:  name,
                content: content,
                status: status,
                priority: priority,
                deadline: deadline,
               user_id: user01.id)
+  Labelling.create(task_id: task.id, label_id: rand(3)+1)
 end
 
 100.times do |n|
@@ -44,12 +49,13 @@ end
   priority = Task.priorities.invert.fetch(rand(3))
   deadline = DateTime.now - rand(1000)
   deadline.to_s(:db)
-  Task.create!(name:  name,
+  task = Task.create!(name:  name,
                content: content,
                status: status,
                priority: priority,
                deadline: deadline,
                user_id: user02.id)
+  Labelling.create(task_id: task.id, label_id: rand(3)+1)
 end
 
 100.times do |n|
@@ -59,10 +65,11 @@ end
   priority = Task.priorities.invert.fetch(rand(3))
   deadline = DateTime.now - rand(1000)
   deadline.to_s(:db)
-  Task.create!(name:  name,
+  task = Task.create!(name:  name,
                content: content,
                status: status,
                priority: priority,
                deadline: deadline,
                user_id: user03.id)
+  Labelling.create(task_id: task.id, label_id: rand(3)+1)
 end

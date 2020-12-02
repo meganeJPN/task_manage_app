@@ -8,6 +8,9 @@ class TasksController < ApplicationController
     @tasks = current_user.tasks.search(@task_search_params)
     @tasks = @tasks.order(deadline: "DESC") if params[:sort_expired_deadline].present?
     @tasks = @tasks.order(priority: "DESC") if params[:sort_expired_priority].present?
+    # binding.irb
+    # @tasks = @tasks.where(id: params[:search][:label_id])
+    @tasks = @tasks.joins(:labels).where(labels: { id: params[:search][:label_id] }) if params.dig(:search, :label_id)
     @tasks = @tasks.page(params[:page]).per(10)
   end
 
@@ -52,11 +55,11 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :content, :deadline).merge(status: params[:task][:status].to_i, priority: params[:task][:priority].to_i)
+    params.require(:task).permit(:name, :content, :deadline, { label_ids: [] }).merge(status: params[:task][:status].to_i, priority: params[:task][:priority].to_i)
   end
 
   def task_search_params
-    params.fetch(:search,{}).permit(:name,:status)
+    params.fetch(:search,{}).permit(:name,:status,:label_id)
   end
 
   def not_login_redirect_to_new_session
