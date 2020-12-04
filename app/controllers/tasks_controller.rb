@@ -10,7 +10,8 @@ class TasksController < ApplicationController
     @tasks = @tasks.order(priority: "DESC") if params[:sort_expired_priority].present?
     # binding.irb
     # @tasks = @tasks.where(id: params[:search][:label_id])
-    @tasks = @tasks.joins(:labels).where(labels: { id: params[:search][:label_id] }) if params.dig(:search, :label_id)
+    # binding.irb
+    @tasks = @tasks.joins(:labels).where(labels: { id: params[:search][:label_id] }) if params.dig(:search, :label_id).present?
     @tasks = @tasks.page(params[:page]).per(10)
   end
 

@@ -7,7 +7,7 @@
       <%= f.text_field :name, value: @task_search_params[:name]%>
       <%= f.label(:status, "ステータス") %>
       <%= f.select :status, Task.statuses.map{|k, v| [t("enums.task.status.#{k}"),v]}, selected: @task_search_params[:status],include_blank: true %>
-       <%= f.label(:label, "ラベル") %>
+      <%= f.label(:label, "ラベル") %> 
       <%= f.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
       <%= f.submit "検索", class:"btn btn-primary btn-lg btn-block" %>
     </div>
